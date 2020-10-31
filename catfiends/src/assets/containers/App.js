@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 // My Components
-import CardList from './CardList';
-import SearchBox from './SearchBox';
-import Scroll from './Scroll';
+import CardList from '../components/CardList';
+import SearchBox from '../components/SearchBox';
+import Scroll from '../components/Scroll';
 
 import '../style/App.css';
 
@@ -26,15 +26,14 @@ class App extends Component {
     }
 
     render(){
-        const filteredCats = this.state.cats.filter(cats => {
-            return cats.name.toLowerCase().includes(this.state.searchField.toLowerCase())
+        const { cats, searchField} = this.state;
+        const filteredCats = cats.filter(cat => {
+            return cat.name.toLowerCase().includes(searchField.toLowerCase())
         })
 
-        if(this.state.cats.length === 0){
-            return <h1>Loading</h1>
-        }
-        else{
-            return (
+        return !cats.length ?
+            <h1>Loading</h1> :
+            (
                 <div className='tc'>
                     <h1 className='f1'>CatFiends</h1>
                     <SearchBox searchChange={this.onSearchChanged}/>
@@ -43,7 +42,7 @@ class App extends Component {
                     </Scroll>
                 </div>
             );
-        }
+    
     }
    
 }
